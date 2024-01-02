@@ -1,4 +1,3 @@
-# TO BE Updated!
 # Gradient Base Image
 
 This repo houses a Dockerfile used to create an image used for Gradient runtimes. This image should be used for all Gradient runtimes, either solely or as the base layer for other images.
@@ -149,3 +148,31 @@ Some generic categories of software not included:
 | Scalable           | Dask, Numba, Spark 1 or 2, Koalas, Hadoop | |
 | TensorFlow         | TF 1.15, Recommenders, TensorBoard, TensorRT | Could add TensorFlow 1.x if customer demand. Requires separate tensorflow-gpu for GPU support. |
 | Viz                | Bokeh, Plotly, Holoviz (Datashader), Google FACETS, Excalidraw, GraphViz, ggplot2, d3.js | |
+
+
+### Notes while Testing Current Version on a Core Machine
+- `sudo docker build -t <img_name> .` works as expected
+- To Run with GPUs `sudo docker run -d --gpus all  -p 8888:8888  <img_name>` 
+- To connect to from local machine to the Docker image running in a remote server:
+    ```bash
+    ssh -N -f -L localhost:8888:0.0.0.0:8888 paperspace@<remote_server_ip>
+
+    #open browser with localhost:8888
+    ```
+- Use the `sudo docker logs <image_id>` to find the `token` and enter the same; `jupyter lab` should spin up
+- Clone [this repo](https://github.com/mvamsiDO/runtime-notebooks.git) and try running the notebooks under `runtime-notebooks/nbs/`
+- Most of the Notebooks work as expected! 
+- Issues faced:
+    - `misc.ipynb` does not work properly, `import flax` fails
+    - `cudnn_samples_v8/mnistCUDNN` fails at `make` with the following error: `test.c:1:10: fatal error: FreeImage.h: No such file or directory`
+    - `accelerate` is not installed, only found it in `ml-in-a-box/ubuntu-22`
+
+
+### Some Useful commands:
+```bash
+#search for PIDs using a particular port
+lsof -ti:8888
+
+#see what exactly is running in the PID
+ps -ef | grep <PID>   
+```
