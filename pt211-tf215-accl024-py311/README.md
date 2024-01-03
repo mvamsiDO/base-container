@@ -179,5 +179,5 @@ ps -ef | grep <PID>
 ```
 
 ### Some Useful resources:
-- https://docs.nvidia.com/deploy/cuda-compatibility/
-- https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.3.1/ubuntu2204/base/Dockerfile
+- GPU - CUDA compatibility : https://docs.nvidia.com/deploy/cuda-compatibility/
+- [Useful Link](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.3.1/ubuntu2204/base/Dockerfile) found to get `apt get install` to work with `cuda, cuda toolkit etc`
