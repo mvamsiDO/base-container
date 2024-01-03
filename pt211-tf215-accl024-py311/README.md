@@ -177,3 +177,7 @@ lsof -ti:8888
 #see what exactly is running in the PID
 ps -ef | grep <PID>   
 ```
+
+### Some Useful resources:
+- https://docs.nvidia.com/deploy/cuda-compatibility/
+- https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.3.1/ubuntu2204/base/Dockerfile
