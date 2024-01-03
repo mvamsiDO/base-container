@@ -164,13 +164,31 @@ Some generic categories of software not included:
 - Clone [this repo](https://github.com/mvamsiDO/runtime-notebooks.git) and try running the notebooks under `runtime-notebooks/nbs/`
 - Most of the Notebooks work as expected! 
 - Issues faced:
-    - `misc.ipynb` does not work properly, `import flax` fails
-    - `cudnn_samples_v8/mnistCUDNN` fails at `make` with the following error: `test.c:1:10: fatal error: FreeImage.h: No such file or directory`
-    - `accelerate` is not installed, only found it in `ml-in-a-box/ubuntu-22`
+    - `misc.ipynb` does not work properly, `import flax` fails -> (can ignore)
+    - `cudnn_samples_v8/mnistCUDNN` fails at `make` with the following error: `test.c:1:10: fatal error: FreeImage.h: No such file or directory` -> (can ignore)
+    - `accelerate` is not installed, only found it in `ml-in-a-box/ubuntu-22` -> (should get fixed with new versions)
+
+### Notes while Testing PT211-TF215-CUDA12 on A100 machine
+- Spun up a `ubuntu-20` base OS, docker not installed
+- Basic `nvidia-smi` is not working, verifying if `P4000` machine had it installed! -> Yes it did have!; Guessing that `P4000` actually is ML-in-a-Box
+    - Ran the following (from ml in a box u20) and restarting to check  if it works:
+    ```bash
+    wget https://developer.download.nvidia.com/compute/cuda/11.7.1/local_installers/cuda_11.7.1_515.65.01_linux.run
+    sudo sh cuda_11.7.1_515.65.01_linux.run --silent --toolkit
+    export PATH=$PATH:/usr/local/cuda-11.7/bin
+    export LD_LIBRARY_PATH=/usr/local/cuda-11.7/lib64
+    rm cuda_11.7.1_515.65.01_linux.run
+    ```
 
 
 ### Some Useful commands:
 ```bash
+# build docker image
+sudo docker build -t <img_name> .
+
+# run with gpus
+sudo docker run -d --gpus all  -p 8888:8888  <img_name>
+
 #search for PIDs using a particular port
 lsof -ti:8888
 
