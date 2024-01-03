@@ -154,6 +154,26 @@
     RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3
     ENV PATH=$PATH:/root/.local/bin
 
+# ==================================================================
+# Installing CUDA packages (CUDA Toolkit 11.7.0 & CUDNN TBD)
+# ------------------------------------------------------------------
+    # Installing CUDA Toolkit
+    RUN wget https://developer.download.nvidia.com/compute/cuda/11.7.0/local_installers/cuda_11.7.0_515.43.04_linux.run && \
+        bash cuda_11.7.0_515.43.04_linux.run --silent --toolkit && \
+        rm cuda_11.7.0_515.43.04_linux.run
+    ENV PATH=$PATH:/usr/local/cuda-11.7/bin
+    ENV LD_LIBRARY_PATH=/usr/local/cuda-11.7/lib64
+
+    # # Installing CUDNN
+    # RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin && \
+    #     mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600 && \
+    #     apt-get install dirmngr -y && \
+    #     apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/3bf863cc.pub && \
+    #     add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/ /" && \
+    #     apt-get update && \
+    #     apt-get install libcudnn8=8.5.0.*-1+cuda11.7 -y && \
+    #     apt-get install libcudnn8-dev=8.5.0.*-1+cuda11.7 -y && \
+    #     rm /etc/apt/preferences.d/cuda-repository-pin-600
 
 # ==================================================================
 # Installing CUDA packages (CUDA Toolkit 11.6.2 & CUDNN 8.4.1)
@@ -188,7 +208,8 @@
 
     # Based on https://pytorch.org/get-started/locally/
 
-    RUN $PIP_INSTALL torch==2.1.1 torchvision==0.16.1 torchaudio==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu116 && \
+    # RUN $PIP_INSTALL torch==2.1.1 torchvision==0.16.1 torchaudio==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu117 && \
+    RUN $PIP_INSTALL torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --extra-index-url https://download.pytorch.org/whl/cu117 && \
 
 # ==================================================================
 # TensorFlow
@@ -196,7 +217,8 @@
 
     # Based on https://www.tensorflow.org/install/pip
 
-    $PIP_INSTALL tensorflow==2.15.0 && \
+    # $PIP_INSTALL tensorflow==2.15.0 && \
+    $PIP_INSTALL tensorflow==2.12.0 && \
 
 
 # ==================================================================
@@ -209,7 +231,7 @@
     $PIP_INSTALL transformers==4.35.2 \
         datasets==2.14.5 \
         peft==0.6.2 \
-        tokenizers==0.13.3 \
+        tokenizers \
         accelerate==0.24.1 \
         diffusers==0.21.4 \
         safetensors==0.4.0 && \
@@ -229,7 +251,6 @@
 # ------------------------------------------------------------------
 
     $PIP_INSTALL \
-        attrs==23.1.0 \
         bitsandbytes==0.41.2 \
         cloudpickle==2.2.1 \
         scikit-image==0.21.0 \
@@ -258,7 +279,8 @@
         timm==0.9.7 \
         omegaconf==2.3.0 \
         scipy==1.11.2 \
-        gradient==2.0.6 
+        gradient==2.0.6 \
+        attrs
 
 
 # ==================================================================
