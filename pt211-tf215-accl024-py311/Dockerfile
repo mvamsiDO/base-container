@@ -223,7 +223,7 @@
 
     # Based on https://pytorch.org/get-started/locally/
 
-    RUN $PIP_INSTALL torch==2.1.1 torchvision==0.16.1 torchaudio==2.1.1 --extra-index-url https://download.pytorch.org/whl/121 && \
+    RUN $PIP_INSTALL torch==2.1.1 torchvision==0.16.1 torchaudio==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu121 && \
 
 # ==================================================================
 # TensorFlow
