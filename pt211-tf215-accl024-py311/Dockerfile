@@ -155,22 +155,23 @@
     ENV PATH=$PATH:/root/.local/bin
 
 # ==================================================================
-# Installing CUDA packages (CUDA Toolkit 11.8.0 & CUDNN TBD)
+# Installing CUDA packages (CUDA Toolkit 12.1.0 & CUDNN TBD)
 # ------------------------------------------------------------------
-    RUN curl -fsSLO https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb && \
-    dpkg -i cuda-keyring_1.1-1_all.deb && \
-    apt-get update
+    # RUN curl -fsSLO https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb && \
+    # dpkg -i cuda-keyring_1.0-1_all.deb && \
+    # apt-get update
 
-    # Installing CUDA Toolkit
-    RUN $APT_INSTALL cuda=12.1.1-1 \
-        cuda-toolkit-12-config-common=12.1.105-1 \
-        cuda-toolkit-config-common=12.1.105-1 \
-        cuda-drivers=535.129.03-1 
-        # libcudnn8=8.9.3.28-1+cuda12.1 \
-        # libcudnn8-dev=8.9.3.28-1+cuda12.1
-    ENV PATH=$PATH:/usr/local/cuda/bin
-    ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
-    ENV CUDA_HOME=/usr/local/cuda
+    # # Installing CUDA Toolkit
+    # RUN $APT_INSTALL \
+        # cuda=12.1.1-1 \
+        # cuda-toolkit-12-config-common=12.1.105-1 \
+        # cuda-toolkit-config-common=12.1.105-1 \
+        # cuda-drivers=535.129.03-1 
+        # libcudnn8=8.8.1.3-1+cuda12.0 \
+        # libcudnn8-dev=8.8.1.3-1+cuda12.0
+    # ENV PATH=$PATH:/usr/local/cuda/bin
+    # ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+    # ENV CUDA_HOME=/usr/local/cuda
 
     # RUN wget https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda_11.8.0_520.61.05_linux.run && \
     #     bash cuda_11.8.0_520.61.05_linux.run --silent --toolkit && \
@@ -222,7 +223,7 @@
 
     # Based on https://pytorch.org/get-started/locally/
 
-    RUN $PIP_INSTALL torch==2.1.1 torchvision==0.16.1 torchaudio==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu118 && \
+    RUN $PIP_INSTALL torch==2.1.1 torchvision==0.16.1 torchaudio==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu121 && \
 
 # ==================================================================
 # TensorFlow
@@ -230,7 +231,19 @@
 
     # Based on https://www.tensorflow.org/install/pip
 
-    $PIP_INSTALL tensorflow==2.15.0 && \
+    $PIP_INSTALL nvidia-cublas-cu12==12.2.5.6 \
+                nvidia-cuda-cupti-cu12==12.2.142 \
+                nvidia-cuda-nvcc-cu12==12.2.140 \
+                nvidia-cuda-nvrtc-cu12==12.2.140 \
+                nvidia-cuda-runtime-cu12==12.2.140 \
+                nvidia-cudnn-cu12==8.9.4.25 \
+                nvidia-cufft-cu12==11.0.8.103 \
+                nvidia-curand-cu12==10.3.3.141 \
+                nvidia-cusolver-cu12==11.5.2.141 \
+                nvidia-cusparse-cu12==12.1.2.141 \
+                nvidia-nccl-cu12==2.16.5 \
+                nvidia-nvjitlink-cu12==12.2.140 \
+                tensorflow==2.15.0 && \
 
 
 # ==================================================================
