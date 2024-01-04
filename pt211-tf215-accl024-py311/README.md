@@ -179,6 +179,11 @@ Some generic categories of software not included:
     export LD_LIBRARY_PATH=/usr/local/cuda-11.7/lib64
     rm cuda_11.7.1_515.65.01_linux.run
     ```
+- **Learnings**: CUDA Toolkit dirvers are shared by the host machine and Docker. So whatever GPU level stuff is needed we need to have them at the base OS level and the Docker itself should not and cannot override drivers or toolkit. 
+- With this, we are able to remove the CUDA section altogher. 
+- Only thing needs to be sorted is `tf` installation, having to install `cuda` libs with PIP.
+    - Need to see if these are not needed in U22 machines? 
+    - If they are needed, what is the way to install them via `APT` and not `PIP`
 
 
 
