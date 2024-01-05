@@ -152,7 +152,29 @@
 
     # Installing pip
     RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3
-    ENV PATH=$PATH:/root/.local/bin
+    ENV PATH=$PATH:/root/.local/bin    
+
+# ==================================================================
+# Installing CUDA packages (CUDA Toolkit 12.2.0 and CUDNN 8.9.7)
+# ------------------------------------------------------------------
+    RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin && \
+        mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600 && \
+        wget https://developer.download.nvidia.com/compute/cuda/12.2.0/local_installers/cuda-repo-ubuntu2204-12-2-local_12.2.0-535.54.03-1_amd64.deb && \
+        dpkg -i cuda-repo-ubuntu2204-12-2-local_12.2.0-535.54.03-1_amd64.deb && \
+        cp /var/cuda-repo-ubuntu2204-12-2-local/cuda-*-keyring.gpg /usr/share/keyrings/ && \
+        apt-get update
+    RUN $APT_INSTALL cuda
+
+    # Installing CUDNN
+    RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/3bf863cc.pub && \
+        add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/ /" && \
+        apt-get update && \
+        $APT_INSTALL libcudnn8=8.9.7.29-1+cuda12.2 \
+                     libcudnn8-dev=8.9.7.29-1+cuda12.2
+
+
+    ENV PATH=$PATH:/usr/local/cuda/bin
+    ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 
 # ==================================================================
 # Installing CUDA packages (CUDA Toolkit 12.1.0 & CUDNN TBD)
@@ -162,8 +184,8 @@
     # dpkg -i cuda-keyring_1.0-1_all.deb && \
     # apt-get update
 
-    # # Installing CUDA Toolkit
-    # RUN $APT_INSTALL \
+    # Installing CUDA Toolkit
+    # RUN $APT_INSTALL nvidia-driver-535=535.129.03-0ubuntu1 cuda=12.2.0-1
         # cuda=12.1.1-1 \
         # cuda-toolkit-12-config-common=12.1.105-1 \
         # cuda-toolkit-config-common=12.1.105-1 \
@@ -232,19 +254,7 @@
 
     # Based on https://www.tensorflow.org/install/pip
 
-    RUN $PIP_INSTALL nvidia-cublas-cu12==12.2.5.6 \
-                nvidia-cuda-cupti-cu12==12.2.142 \
-                nvidia-cuda-nvcc-cu12==12.2.140 \
-                nvidia-cuda-nvrtc-cu12==12.2.140 \
-                nvidia-cuda-runtime-cu12==12.2.140 \
-                nvidia-cudnn-cu12==8.9.4.25 \
-                nvidia-cufft-cu12==11.0.8.103 \
-                nvidia-curand-cu12==10.3.3.141 \
-                nvidia-cusolver-cu12==11.5.2.141 \
-                nvidia-cusparse-cu12==12.1.2.141 \
-                nvidia-nccl-cu12==2.16.5 \
-                nvidia-nvjitlink-cu12==12.2.140 \
-                tensorflow==2.15.0 && \
+    RUN $PIP_INSTALL tensorflow==2.15.0 && \
 
 
 # ==================================================================
