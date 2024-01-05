@@ -188,6 +188,8 @@ Some generic categories of software not included:
 
     sudo systemctl restart docker
     ```
+- Need to see if this [nvidia-container-toolkit](https://github.com/NVIDIA/nvidia-container-toolkit) is better than `nvidia-docker2`
+
 - Still facing some `cuda toolkit` issues, Running into this when  `accelerate launch --config_file accelerate_condigs/ds-stg2.yaml train_causal_bnb.py` (docker img: same_a100_u20_img)
     ```
     The following directories listed in your path were found to be non-existent: {PosixPath('/tmp/torchelastic_dzgu5pzy/none_b_8v4_ou/attempt_0/0/error.json')}
@@ -208,7 +210,9 @@ Some generic categories of software not included:
     CUDA SETUP: Solution 2b): Install desired CUDA version to desired location. The syntax is bash cuda_install.sh CUDA_VERSION PATH_TO_INSTALL_INTO.
     CUDA SETUP: Solution 2b): For example, "bash cuda_install.sh 113 ~/local/" will download CUDA 11.3 and install into the folder ~/local
     ```
+    
     - Trying [this soln here](https://stackoverflow.com/a/62791665) -> Does not work, ignore; reverted!
+    
     - Making an env variable that can share all the libs with docker container. -> Does not work!
         ```
         # adding this to docker file
@@ -217,14 +221,34 @@ Some generic categories of software not included:
         #and running like so:
         docker run -v /usr/lib/x86_64-linux-gnu/:/usr/lib/from_host/ myimage
         ```
+    
     - This seems to work, integrating into Docker. 
         ```
             #Download CUDA install script: 
             wget https://github.com/TimDettmers/bitsandbytes/blob/main/install_cuda.sh
             export LD_LIBRARY_PATH
             export PATH
-        ```
 
+            # Something like this:
+            sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/3bf863cc.pub && \
+            sudo add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/ /" && \
+            sudo apt-get update && \
+            sudo apt-get install cuda=12.2.0-1 
+
+            # OR
+            wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin
+            sudo mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600
+            wget https://developer.download.nvidia.com/compute/cuda/12.2.0/local_installers/cuda-repo-ubuntu2204-12-2-local_12.2.0-535.54.03-1_amd64.deb
+            sudo dpkg -i cuda-repo-ubuntu2204-12-2-local_12.2.0-535.54.03-1_amd64.deb
+            sudo cp /var/cuda-repo-ubuntu2204-12-2-local/cuda-*-keyring.gpg /usr/share/keyrings/
+            sudo apt-get update
+            sudo apt-get -y install cuda
+        ```
+    - This CUDA installation above works and Torch, accelerate seem to work fine, TF still causing issues when we remove pip based cuda stuff
+        - Need to verify if TF is able to access GPU on an ML-In-Box machine? -> Yes!
+        - Got it to work with `libcudnn8` install; incorprating it into Docker -> Done!
+
+- **Learning:** We do not need `pip install tensorflow[and-cuda]` and can use `pip install tensorflow=2.15.0` directly, as long as the `cuda-toolkit` and `libcudnn` are installed and path is specified properly.
 
 ### Some Useful commands:
 ```bash
@@ -239,8 +263,19 @@ lsof -ti:8888
 
 #see what exactly is running in the PID
 ps -ef | grep <PID>   
+
+#check GPU
+python -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
+
+#check accelerate base setup
+python -m bitsandbytes
+
+#nv-smi
+nvidia-smi
+
 ```
 
 ### Some Useful resources:
 - GPU - CUDA compatibility : https://docs.nvidia.com/deploy/cuda-compatibility/
 - [Useful Link](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.3.1/ubuntu2204/base/Dockerfile) found to get `apt get install` to work with `cuda, cuda toolkit etc`
+- [Fix to the CUDNN Sample run bug](https://forums.developer.nvidia.com/t/freeimage-is-not-set-up-correctly-please-ensure-freeimae-is-set-up-correctly/66950/3)
