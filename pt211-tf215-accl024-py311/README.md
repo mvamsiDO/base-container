@@ -183,7 +183,7 @@ Some generic categories of software not included:
 - With this, we are able to remove the CUDA section altogher. 
 - Only thing needs to be sorted is `tf` installation, having to install `cuda` libs with PIP.
     - Need to see if these are not needed in U22 machines? - Yes!
-    - If they are needed, what is the way to install them via `APT` and not `PIP` - Checking
+    - If they are needed, what is the way to install them via `APT` and not `PIP` - Checking, resolved in a100_u22 docker
 
 
 
