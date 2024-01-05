@@ -208,6 +208,22 @@ Some generic categories of software not included:
     CUDA SETUP: Solution 2b): Install desired CUDA version to desired location. The syntax is bash cuda_install.sh CUDA_VERSION PATH_TO_INSTALL_INTO.
     CUDA SETUP: Solution 2b): For example, "bash cuda_install.sh 113 ~/local/" will download CUDA 11.3 and install into the folder ~/local
     ```
+    - Trying [this soln here](https://stackoverflow.com/a/62791665) -> Does not work, ignore; reverted!
+    - Making an env variable that can share all the libs with docker container. -> Does not work!
+        ```
+        # adding this to docker file
+        ENV LD_LIBRARY_PATH /usr/lib/from_host/
+
+        #and running like so:
+        docker run -v /usr/lib/x86_64-linux-gnu/:/usr/lib/from_host/ myimage
+        ```
+    - This seems to work, integrating into Docker. 
+        ```
+            #Download CUDA install script: 
+            wget https://github.com/TimDettmers/bitsandbytes/blob/main/install_cuda.sh
+            export LD_LIBRARY_PATH
+            export PATH
+        ```
 
 
 ### Some Useful commands:

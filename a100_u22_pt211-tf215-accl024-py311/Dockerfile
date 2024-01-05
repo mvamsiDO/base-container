@@ -157,6 +157,7 @@
 # ==================================================================
 # Installing CUDA packages (CUDA Toolkit 12.1.0 & CUDNN TBD)
 # ------------------------------------------------------------------
+
     # RUN curl -fsSLO https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb && \
     # dpkg -i cuda-keyring_1.0-1_all.deb && \
     # apt-get update
@@ -223,7 +224,7 @@
 
     # Based on https://pytorch.org/get-started/locally/
 
-    RUN $PIP_INSTALL torch==2.1.1 torchvision==0.16.1 torchaudio==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu121 && \
+    RUN $PIP_INSTALL torch==2.1.1 torchvision==0.16.1 torchaudio==2.1.1 --extra-index-url https://download.pytorch.org/whl/cu121
 
 # ==================================================================
 # TensorFlow
@@ -231,7 +232,7 @@
 
     # Based on https://www.tensorflow.org/install/pip
 
-    $PIP_INSTALL nvidia-cublas-cu12==12.2.5.6 \
+    RUN $PIP_INSTALL nvidia-cublas-cu12==12.2.5.6 \
                 nvidia-cuda-cupti-cu12==12.2.142 \
                 nvidia-cuda-nvcc-cu12==12.2.140 \
                 nvidia-cuda-nvrtc-cu12==12.2.140 \
@@ -268,14 +269,14 @@
 
     # Based on https://jupyterlab.readthedocs.io/en/stable/getting_started/installation.html#pip
 
-    $PIP_INSTALL jupyterlab==3.6.5 && \
+    $PIP_INSTALL jupyterlab==3.6.5
 
 
 # ==================================================================
 # Additional Python Packages
 # ------------------------------------------------------------------
 
-    $PIP_INSTALL \
+    RUN $PIP_INSTALL \
         bitsandbytes==0.41.2 \
         cloudpickle==2.2.1 \
         scikit-image==0.21.0 \
@@ -296,6 +297,7 @@
         future==0.18.3 \
         jsonify==0.5 \
         opencv-python==4.8.0.76 \
+        openpyxl==3.1.2 \
         pyyaml==5.4.1 \
         sentence-transformers==2.2.2 \
         wandb==0.15.10 \
@@ -304,8 +306,8 @@
         timm==0.9.7 \
         omegaconf==2.3.0 \
         scipy==1.11.2 \
-        gradient==2.0.6 \
-        attrs
+        gradient==2.0.6
+        # attrs
 
 
 # ==================================================================
