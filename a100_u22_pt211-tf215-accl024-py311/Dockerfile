@@ -8,8 +8,8 @@
 # ------------------------------------------------------------------
 # python                        3.11.6           (apt)
 # pip3                          23.3.1           (apt)
-# cuda toolkit                  12.1.1           (apt)
-# cudnn                         8.9.3            (apt)
+# cuda toolkit                  12.2.0           (apt)
+# cudnn                         8.9.7            (apt)
 # torch                         2.1.1            (pip)
 # torchvision                   0.16.1           (pip)
 # torchaudio                    2.1.1            (pip)
@@ -163,7 +163,8 @@
         dpkg -i cuda-repo-ubuntu2204-12-2-local_12.2.0-535.54.03-1_amd64.deb && \
         cp /var/cuda-repo-ubuntu2204-12-2-local/cuda-*-keyring.gpg /usr/share/keyrings/ && \
         apt-get update
-    RUN $APT_INSTALL cuda
+    RUN $APT_INSTALL cuda && \  
+        rm cuda-repo-ubuntu2204-12-2-local_12.2.0-535.54.03-1_amd64.deb
 
     # Installing CUDNN
     RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/3bf863cc.pub && \
@@ -317,7 +318,7 @@
         omegaconf==2.3.0 \
         scipy==1.11.2 \
         gradient==2.0.6
-        # attrs
+    RUN $PIP_INSTALL attrs==23.1.0
 
 
 # ==================================================================
