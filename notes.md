@@ -15,7 +15,7 @@
     - `cudnn_samples_v8/mnistCUDNN` fails at `make` with the following error: `test.c:1:10: fatal error: FreeImage.h: No such file or directory` -> (can ignore)
     - `accelerate` is not installed, only found it in `ml-in-a-box/ubuntu-22` -> (should get fixed with new versions)
 
-### Notes while Testing PT211-TF215-CUDA12 on A10 on U22 machine
+### Notes while Testing PT211-TF215-CUDA12 on A100 on U22 machine
 - Spun up a `ubuntu-22` base OS, `docker`, `nvidia-smi` not installed
 - Installing the basic pkgs from 1st cmd in MLiab
 - `sudo apt install docker.io` to install Docker
@@ -98,12 +98,18 @@
 - **Learning:** We do not need `pip install tensorflow[and-cuda]` and can use `pip install tensorflow=2.15.0` directly, as long as the `cuda-toolkit` and `libcudnn` are installed and path is specified properly.
 
 
-### Notes while Testing PT211-TF215 on A10 on U22 machine with CUDA 12.0 and CUDANN-8.8.1
+### Notes while Testing PT211-TF215 on A100 on U22 machine with CUDA 12.0 and CUDANN-8.8.1
 - Need to check if torch will work as it is on 12.1 and we are going back a version! -> works fine 
+- is 12 cuda tk working on 12.2 driver on host? -> yes, is it might be backward compatable. (host driver enabling this i pressume)
+- TF 2.15 fails to work! [Says its compiled using 12.2](https://www.tensorflow.org/install/source#gpu) ; but in MLiaB it works on 12.1.
 
 
-### Notes while Testing PT211-TF215 on A10 on U22 machine with CUDA 12.1 and CUDANN-8.9.3
-
+### Notes while Testing PT211-TF215 on gradient machine with CUDA 12.1 and CUDANN-8.9.3
+- Pushing `cu121_530_with_latest` to `mvamsi757/gradient_container:cu121_530` [hub link](https://hub.docker.com/repository/docker/mvamsi757/gradient_container/tags?page=1&ordering=last_updated)
+- So, by this logic, 12.1 cuda should not work on 12.0 driver on host -> Yes, it is not Working!! `nvidia-smi: Failed to initialize NVML: Driver/library version mismatch`
+- Check if with 12.1 cuda, TF 2.15 works -> Yes, Works fine!
+- Torch works? -> Yes, Works fine!
+- Interesting observations: So `nvidia-smi` is not working as expected, but the GPU is accessible and being utilised by PyTorch and TF. 
 
 
 ### Some Useful commands:
