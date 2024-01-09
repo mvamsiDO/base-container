@@ -97,6 +97,15 @@
 
 - **Learning:** We do not need `pip install tensorflow[and-cuda]` and can use `pip install tensorflow=2.15.0` directly, as long as the `cuda-toolkit` and `libcudnn` are installed and path is specified properly.
 
+
+### Notes while Testing PT211-TF215 on A10 on U22 machine with CUDA 12.0 and CUDANN-8.8.1
+- Need to check if torch will work as it is on 12.1 and we are going back a version! -> works fine 
+
+
+### Notes while Testing PT211-TF215 on A10 on U22 machine with CUDA 12.1 and CUDANN-8.9.3
+
+
+
 ### Some Useful commands:
 ```bash
 # build docker image
