@@ -124,7 +124,7 @@
 | V100-32          | Yes              | Yes          | No, CUDNN-MisMatch-881-894            | Yes          |
 | A100             | Yes              | Yes          | No, CUDNN-MisMatch-881-894            | Yes          |
 
-
+- Need to investigate why P series works but others dont!
 
 ### Notes while Testing PT211-TF215 on gradient machine(P6000) with CUDA 12.0 and CUDANN-8.8.1
 - Pushing to `gradient_container:cu120_525` [hub link](https://hub.docker.com/repository/docker/mvamsi757/gradient_container/tags?page=1&ordering=last_updated)
