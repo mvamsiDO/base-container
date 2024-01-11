@@ -104,8 +104,8 @@
 - TF 2.15 fails to work! [Says its compiled using 12.2](https://www.tensorflow.org/install/source#gpu) ; but in MLiaB it works on 12.1.
 
 
-### Notes while Testing PT211-TF215 on gradient machine(P6000) with CUDA 12.1 and CUDANN-8.9.3
-- Pushing `cu120_530_with_latest` to `mvamsi757/gradient_container:cu121_530` [hub link](https://hub.docker.com/repository/docker/mvamsi757/gradient_container/tags?page=1&ordering=last_updated)
+### Notes while Testing PT211-TF215 on gradient machine(P6000) with CUDA 12.1.1 and CUDANN-8.9.3
+- Pushing `cu1211_530_with_latest` to `mvamsi757/gradient_container:cu1211_530` [hub link](https://hub.docker.com/repository/docker/mvamsi757/gradient_container/tags?page=1&ordering=last_updated)
 - So, by this logic, 12.1 cuda should not work on 12.0 driver on host -> Yes, it is not Working!! `nvidia-smi: Failed to initialize NVML: Driver/library version mismatch`
 - Check if with 12.1 cuda, TF 2.15 works -> Yes, Works fine!
 - Torch works? -> Yes, Works fine!
@@ -119,12 +119,10 @@
 | GPU/Family       | Nvidia-smi?      | PyTorch?     | Tensorflow?    | CudaNN test? | 
 | -------------    | -------------    | -------------| -------------  | -------------|
 | P6000            | No, DLVM         | Yes          | Yes            | Yes          |
-| RTX4000          | Yes              | Yes          | No, CUDNN-MisMatch-881-894    | Yes          |
-| A6000            | Yes              | Yes          | No, CUDNN-MisMatch-881-894            | Yes          |
-| V100-32          | Yes              | Yes          | No, CUDNN-MisMatch-881-894            | Yes          |
-| A100             | Yes              | Yes          | No, CUDNN-MisMatch-881-894            | Yes          |
-
-- Need to investigate why P series works but others dont!
+| RTX4000          | No, DLVM         | Yes          | Yes            | Yes          |
+| A6000            | No, DLVM         | Yes          | Yes            | Yes          |
+| V100-32          | No, DLVM         | Yes          | Yes            | Yes          |
+| A100             | No, DLVM         | Yes          | Yes            | Yes          |
 
 ### Notes while Testing PT211-TF215 on gradient machine(P6000) with CUDA 12.0 and CUDANN-8.8.1
 - Pushing to `gradient_container:cu120_525` [hub link](https://hub.docker.com/repository/docker/mvamsi757/gradient_container/tags?page=1&ordering=last_updated)

@@ -155,16 +155,16 @@
     ENV PATH=$PATH:/root/.local/bin    
 
 # ==================================================================
-# Installing CUDA packages (CUDA Toolkit 12.1 and CUDNN 8.9.3)
+# Installing CUDA packages (CUDA Toolkit 12.1.1 and CUDNN 8.9.3)
 # ------------------------------------------------------------------
     RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin && \
         mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600 && \
-        wget https://developer.download.nvidia.com/compute/cuda/12.1.0/local_installers/cuda-repo-ubuntu2204-12-1-local_12.1.0-530.30.02-1_amd64.deb && \
-        dpkg -i cuda-repo-ubuntu2204-12-1-local_12.1.0-530.30.02-1_amd64.deb && \
+        wget https://developer.download.nvidia.com/compute/cuda/12.1.1/local_installers/cuda-repo-ubuntu2204-12-1-local_12.1.1-530.30.02-1_amd64.deb && \
+        dpkg -i cuda-repo-ubuntu2204-12-1-local_12.1.1-530.30.02-1_amd64.deb && \
         cp /var/cuda-repo-ubuntu2204-12-1-local/cuda-*-keyring.gpg /usr/share/keyrings/ && \
         apt-get update
     RUN $APT_INSTALL cuda && \  
-        rm cuda-repo-ubuntu2204-12-1-local_12.1.0-530.30.02-1_amd64.deb
+        rm cuda-repo-ubuntu2204-12-1-local_12.1.1-530.30.02-1_amd64.deb
 
     # Installing CUDNN
     RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/3bf863cc.pub && \
