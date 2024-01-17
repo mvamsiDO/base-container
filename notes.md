@@ -126,6 +126,8 @@
 
 ### Tests on PT211-TF215 with CUDA 12.1.1-deb and CUDNN-8.9.3
 - Same as before which is what i would have expected!
+
+
 | GPU/Family       | Nvidia-smi?      | PyTorch?     | Tensorflow?    | CudaNN test? | 
 | -------------    | -------------    | -------------| -------------  | -------------|
 | P6000            | No, DLVM         | Yes          | Yes            | Yes          |
