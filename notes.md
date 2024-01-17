@@ -124,6 +124,17 @@
 | V100-32          | No, DLVM         | Yes          | Yes            | Yes          |
 | A100             | No, DLVM         | Yes          | Yes            | Yes          |
 
+### Tests on PT211-TF215 with CUDA 12.1.1-deb and CUDNN-8.9.3
+- Same as before which is what i would have expected!
+| GPU/Family       | Nvidia-smi?      | PyTorch?     | Tensorflow?    | CudaNN test? | 
+| -------------    | -------------    | -------------| -------------  | -------------|
+| P6000            | No, DLVM         | Yes          | Yes            | Yes          |
+| RTX4000          | No, DLVM         | Yes          | Yes            | Yes          |
+| A6000            | No, DLVM         | Yes          | Yes            | Yes          |
+| V100-32          | No, DLVM         | Yes          | Yes            | Yes          |
+| A100             | No, DLVM         | Yes          | Yes            | Yes          |
+
+
 ### Notes while Testing PT211-TF215 on gradient machine(P6000) with CUDA 12.0 and CUDANN-8.8.1
 - Pushing to `gradient_container:cu120_525` [hub link](https://hub.docker.com/repository/docker/mvamsi757/gradient_container/tags?page=1&ordering=last_updated)
 - So,  12.0 cuda should work on 12.0 driver on host -> `nvidia-smi` works fine
