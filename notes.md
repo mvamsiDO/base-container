@@ -143,6 +143,53 @@
 - TF works (my guess is no!) -> No it does not, have to downgrade to 2.14
 - Torch works? -> Yes!
 
+### Tests on PT211-TF215 with CUDA 12.0-deb and CUDNN-8.8.1
+- TL:DR; 
+
+
+| GPU/Family       | Nvidia-smi?      | PyTorch?     | Tensorflow?    | CudaNN test? | 
+| -------------    | -------------    | -------------| -------------  | -------------|
+| P6000            | No, DLVM         | Yes          | Yes            | Yes          |
+| RTX4000          | No, DLVM         | Yes          | Yes            | Yes          |
+| A6000            | No, DLVM         | Yes          | Yes            | Yes          |
+| V100-32          | No, DLVM         | Yes          | Yes            | Yes          |
+| A100             | No, DLVM         | Yes          | Yes            | Yes          |
+
+### Random notes:
+- There seems to be difference in behavior when Installing cuda toolkit via 
+```
+ RUN wget  https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb && \
+        dpkg -i cuda-keyring_1.0-1_all.deb && \
+        apt-get update
+RUN $APT_INSTALL cuda-12-0 && \  
+    rm cuda-keyring_1.0-1_all.deb
+```
+AND
+```
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin && \
+        mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600 && \
+        wget https://developer.download.nvidia.com/compute/cuda/12.0.0/local_installers/cuda-repo-ubuntu2204-12-0-local_12.0.0-525.60.13-1_amd64.deb && \
+        dpkg -i cuda-repo-ubuntu2204-12-0-local_12.0.0-525.60.13-1_amd64.deb && \
+        cp /var/cuda-repo-ubuntu2204-12-0-local/cuda-*-keyring.gpg /usr/share/keyrings/ && \
+        apt-get update
+    RUN $APT_INSTALL cuda && \  
+        rm cuda-repo-ubuntu2204-12-0-local_12.0.0-525.60.13-1_amd64.deb
+```
+- Docker img gets built via 1st approach 
+    - Img name on A100_U22 machine: `cu120_deb_tf214` 
+    - Has `12.0.1` versions in `/usr/local/cuda/version.json` 
+    - Has `12.0.140` version for `cuda_nvml_dev`
+    - `nvidia-smi` does not works fine, throws error: `Failed to initialize NVML: Driver/library version mismatch NVML library version: 545.23`
+    - My guess is it will not work on Notebook either? - correct! does not work!
+- Docker img gets built via 2nd approach 
+    - Img name on A100_U22 machine: `cu120_525_tf214` 
+    - Has `12.0.0` versions in `/usr/local/cuda/version.json` 
+    - Has `12.0.76` version for `cuda_nvml_dev`
+    - `nvidia-smi` works fine, even tough it shows 12.2 + 535 as the cuda driver (which is what the A100 has)
+    - My guess is it will work fine on Notebook either? - yes, works!
+
+
+
 
 ### Some Useful commands:
 ```bash
