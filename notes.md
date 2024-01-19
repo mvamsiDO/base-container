@@ -143,17 +143,17 @@
 - TF works (my guess is no!) -> No it does not, have to downgrade to 2.14
 - Torch works? -> Yes!
 
-### Tests on PT211-TF215 with CUDA 12.0-deb and CUDNN-8.8.1
-- TL:DR; 
-
+### Tests on PT211-TF215 with CUDA 12.0-525 and CUDNN-8.9.7
+- Docker image here `gradient_container:cu120_525_tf15_cudnn897` [hub link](https://hub.docker.com/repository/docker/mvamsi757/gradient_container/tags?page=1&ordering=last_updated)
+- Everything works as expected, need to see if we get approval for non deb based installation.
 
 | GPU/Family       | Nvidia-smi?      | PyTorch?     | Tensorflow?    | CudaNN test? | 
 | -------------    | -------------    | -------------| -------------  | -------------|
-| P6000            | No, DLVM         | Yes          | Yes            | Yes          |
-| RTX4000          | No, DLVM         | Yes          | Yes            | Yes          |
-| A6000            | No, DLVM         | Yes          | Yes            | Yes          |
-| V100-32          | No, DLVM         | Yes          | Yes            | Yes          |
-| A100             | No, DLVM         | Yes          | Yes            | Yes          |
+| P6000            | Yes              | Yes          | Yes            | Yes          |
+| RTX4000          | Yes              | Yes          | Yes            | Yes          |
+| A6000            | Yes              | Yes          | Yes            | Yes          |
+| V100-32          | Yes              | Yes          | Yes            | Yes          |
+| A100             | Yes              | Yes          | Yes            | Yes          |
 
 ### Random notes:
 - There seems to be difference in behavior when Installing cuda toolkit via 
