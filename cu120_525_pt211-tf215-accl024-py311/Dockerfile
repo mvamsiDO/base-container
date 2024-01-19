@@ -155,7 +155,7 @@
     ENV PATH=$PATH:/root/.local/bin    
 
 # ==================================================================
-# Installing CUDA packages (CUDA Toolkit 12.0 and CUDNN 8.8.1)
+# Installing CUDA packages (CUDA Toolkit 12.0 and CUDNN 8.9.7)
 # ------------------------------------------------------------------
     RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin && \
         mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600 && \
@@ -170,8 +170,8 @@
     RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/3bf863cc.pub && \
         add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/ /" && \
         apt-get update && \
-        $APT_INSTALL libcudnn8=8.8.1.3-1+cuda12.0 \
-                     libcudnn8-dev=8.8.1.3-1+cuda12.0
+        $APT_INSTALL libcudnn8=8.9.7.29-1+cuda12.2  \
+                     libcudnn8-dev=8.9.7.29-1+cuda12.2
 
 
     ENV PATH=$PATH:/usr/local/cuda/bin

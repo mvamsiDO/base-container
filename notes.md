@@ -187,6 +187,7 @@ RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86
     - Has `12.0.76` version for `cuda_nvml_dev`
     - `nvidia-smi` works fine, even tough it shows 12.2 + 535 as the cuda driver (which is what the A100 has)
     - My guess is it will work fine on Notebook either? - yes, works!
+    - `TF` was not able to detect GPU -> Upgraded to TF 2.15.0 and upgraded the CudNN version to 8.9.7 ->  everything seems to work.
 
 
 
@@ -220,3 +221,4 @@ nvidia-smi
 - GPU - CUDA compatibility : https://docs.nvidia.com/deploy/cuda-compatibility/
 - [Useful Link](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.3.1/ubuntu2204/base/Dockerfile) found to get `apt get install` to work with `cuda, cuda toolkit etc`
 - [Fix to the CUDNN Sample run bug](https://forums.developer.nvidia.com/t/freeimage-is-not-set-up-correctly-please-ensure-freeimae-is-set-up-correctly/66950/3)
+- [Support matrix for CudNN and CUDA](https://docs.nvidia.com/deeplearning/cudnn/support-matrix/index.html)
