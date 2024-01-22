@@ -158,10 +158,10 @@
 
 - Accelerate tests:
 
-| GPU/Family       | Nvidia-smi?      | Accelerate?  |
-| -------------    | -------------    | -------------|
-| A100             | Yes              | Yes          |
-| A4000x2          | Yes              | Yes          |
+| GPU/Family       | Nvidia-smi?      | Accelerate?  | PyTorch-MultiGPU? | 
+| -------------    | -------------    | -------------|-------------|
+| A100             | Yes              | Yes          | NA          |
+| A4000x2          | Yes              | Yes          | Yes         |
 
 
 ### Random notes:
