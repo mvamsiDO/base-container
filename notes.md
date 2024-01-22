@@ -155,6 +155,14 @@
 | V100-32          | Yes              | Yes          | Yes            | Yes          |
 | A100             | Yes              | Yes          | Yes            | Yes          |
 
+
+- Accelerate tests:
+| GPU/Family       | Nvidia-smi?      | Accelerate?  |
+| -------------    | -------------    | -------------|
+| A100             | Yes              | Yes          |
+| A4000x2          | Yes              | Yes          |
+
+
 ### Random notes:
 - There seems to be difference in behavior when Installing cuda toolkit via 
 ```
