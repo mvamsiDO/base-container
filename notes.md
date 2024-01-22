@@ -157,6 +157,7 @@
 
 
 - Accelerate tests:
+
 | GPU/Family       | Nvidia-smi?      | Accelerate?  |
 | -------------    | -------------    | -------------|
 | A100             | Yes              | Yes          |
