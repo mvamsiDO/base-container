@@ -162,8 +162,8 @@
         wget https://developer.download.nvidia.com/compute/cuda/12.0.0/local_installers/cuda-repo-ubuntu2204-12-0-local_12.0.0-525.60.13-1_amd64.deb && \
         dpkg -i cuda-repo-ubuntu2204-12-0-local_12.0.0-525.60.13-1_amd64.deb && \
         cp /var/cuda-repo-ubuntu2204-12-0-local/cuda-*-keyring.gpg /usr/share/keyrings/ && \
-        apt-get update
-    RUN $APT_INSTALL cuda && \  
+        apt-get update && \
+        $APT_INSTALL cuda && \  
         rm cuda-repo-ubuntu2204-12-0-local_12.0.0-525.60.13-1_amd64.deb
 
     # Installing CUDNN

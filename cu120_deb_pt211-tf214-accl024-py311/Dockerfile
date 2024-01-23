@@ -155,20 +155,20 @@
     ENV PATH=$PATH:/root/.local/bin    
 
 # ==================================================================
-# Installing CUDA packages (CUDA Toolkit 12.0 and CUDNN 8.8.1)
+# Installing CUDA packages (CUDA Toolkit 12.0 and CUDNN 8.9.7)
 # ------------------------------------------------------------------
     RUN wget  https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb && \
         dpkg -i cuda-keyring_1.0-1_all.deb && \
         apt-get update
-    RUN $APT_INSTALL cuda-12-0 && \  
+    RUN $APT_INSTALL cuda=12.0.0-1 && \   
         rm cuda-keyring_1.0-1_all.deb
-
+    # $APT_INSTALL cuda-12-0=12.0.0-1 cuda-nvml-dev-12-0=12.0.76-1 cuda-toolkit-12-0=12.0.0-1 cuda-visual-tools-12-0=12.0.0-1 cuda-tools-12-0=12.0.0-1
     # Installing CUDNN
     RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/3bf863cc.pub && \
         add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/ /" && \
         apt-get update && \
-        $APT_INSTALL libcudnn8=8.8.1.3-1+cuda12.0 \
-                     libcudnn8-dev=8.8.1.3-1+cuda12.0
+        $APT_INSTALL libcudnn8=8.9.7.29-1+cuda12.2  \
+                     libcudnn8-dev=8.9.7.29-1+cuda12.2
 
 
     ENV PATH=$PATH:/usr/local/cuda/bin
