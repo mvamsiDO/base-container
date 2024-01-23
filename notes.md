@@ -154,6 +154,7 @@
 | A6000            | Yes              | Yes          | Yes            | Yes          |
 | V100-32          | Yes              | Yes          | Yes            | Yes          |
 | A100             | Yes              | Yes          | Yes            | Yes          |
+| A100x2           | Yes              | Yes          | Yes            | Yes          |
 
 
 - Accelerate tests:
@@ -162,6 +163,7 @@
 | -------------    | -------------    | -------------|-------------|
 | A100             | Yes              | Yes          | NA          |
 | A4000x2          | Yes              | Yes          | Yes         |
+| A100x2           | Yes              | Yes          | Yes         |
 
 
 ### Random notes:
