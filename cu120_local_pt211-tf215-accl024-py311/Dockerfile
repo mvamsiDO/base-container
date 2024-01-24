@@ -9,7 +9,7 @@
 # python                        3.11.6           (apt)
 # pip3                          23.3.1           (apt)
 # cuda toolkit                  12.0.0           (apt)
-# cudnn                         8.8.1            (apt)
+# cudnn                         8.9.7            (apt)
 # torch                         2.1.1            (pip)
 # torchvision                   0.16.1           (pip)
 # torchaudio                    2.1.1            (pip)
@@ -157,12 +157,12 @@
 # ==================================================================
 # Installing CUDA packages (CUDA Toolkit 12.0 and CUDNN 8.9.7)
 # ------------------------------------------------------------------
-    RUN wget  https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb && \
-        dpkg -i cuda-keyring_1.0-1_all.deb && \
-        apt-get update
-    RUN $APT_INSTALL cuda=12.0.0-1 && \   
-        rm cuda-keyring_1.0-1_all.deb
-    # $APT_INSTALL cuda-12-0=12.0.0-1 cuda-nvml-dev-12-0=12.0.76-1 cuda-toolkit-12-0=12.0.0-1 cuda-visual-tools-12-0=12.0.0-1 cuda-tools-12-0=12.0.0-1
+    RUN wget https://developer.download.nvidia.com/compute/cuda/12.0.0/local_installers/cuda_12.0.0_525.60.13_linux.run && \
+        bash cuda_12.0.0_525.60.13_linux.run --silent --toolkit && \
+        rm cuda_12.0.0_525.60.13_linux.run
+    ENV PATH=$PATH:/usr/local/cuda-12.0/bin
+    ENV LD_LIBRARY_PATH=/usr/local/cuda-12.0/lib64:$LD_LIBRARY_PATH
+    
     # Installing CUDNN
     RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/3bf863cc.pub && \
         add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/ /" && \
@@ -252,7 +252,7 @@
 
     # Based on https://www.tensorflow.org/install/pip
 
-    RUN $PIP_INSTALL tensorflow==2.14.0 && \
+    RUN $PIP_INSTALL tensorflow==2.15.0 && \
 
 
 # ==================================================================
