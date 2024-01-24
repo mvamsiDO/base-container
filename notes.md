@@ -200,7 +200,27 @@ RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86
     - My guess is it will work fine on Notebook either? - yes, works!
     - `TF` was not able to detect GPU -> Upgraded to TF 2.15.0 and upgraded the CudNN version to 8.9.7 ->  everything seems to work.
 
+### Compressions Experiement Notes:
+- Understood that the docker image is almost double beacuse of the way we are installing Cuda Toolkit. 
+- So instead of local deb, tried to install via network deb [ref link](https://developer.nvidia.com/cuda-12-0-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=22.04&target_type=deb_network)
+- As it was earlier, the package manager was not picking the rite version of additional libraries; for the ones we mention it picks 12.0.0, but for all the additional stuff it defaults to 12.0.1, and this causes the `DLVM` version mis-match error on `nvidia-smi` ; Check [Dockerfile](cu120_deb_pt211-tf214-accl024-py311/Dockerfile)
+-  Finally to reduce the compressed docker image from 15GB
+    - Concatinated the `wget`, `apt-get install` and `rm deb` in one Docker `RUN` command -> reduced to compressed 12GB
+    - Also, by going to a non-deb based (.run based) installer of `CUDA Toolkit` [ref link](https://developer.nvidia.com/cuda-12-0-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=22.04&target_type=runfile_local) -> reduce the compressed size to 9.2GB; Check [Dockerfile](cu120_local_pt211-tf215-accl024-py311/Dockerfile)
 
+- Basic tests on both reduced versions on `A100x2` done and all tests pass
+
+| Docker tag       | Nvidia-smi?      | PyTorch?     | Tensorflow?    | CudaNN test? | 
+| -------------    | -------------    | -------------| -------------  | -------------|
+| cu120_525_tf15_cudnn897_concat           | Yes              | Yes          | Yes            | Yes          |
+| cu120_525_tf15_cudnn897_lconcat          | Yes              | Yes          | Yes            | Yes          |
+
+- Accelerate tests:
+
+| Docker tag       | Nvidia-smi?      | Accelerate?  | PyTorch-MultiGPU? | 
+| -------------    | -------------    | -------------|-------------|
+| cu120_525_tf15_cudnn897_concat             | Yes              | Yes          | Yes          |
+| cu120_525_tf15_cudnn897_lconcat          | Yes              | Yes          | Yes         |
 
 
 ### Some Useful commands:
